@@ -1,0 +1,36 @@
+title: $:/plugins/LinHQ/backlink/ui/button
+type: text/vnd.tiddlywiki
+caption: {{$:/core/images/transcludify}} 反向链接
+description: 切换反向链接的搜索范围
+
+\whitespace trim
+<$let state="$:/plugins/LinHQ/backlink/states/extend" usage="切换搜索范围">
+    <$reveal type="match" state=<<state>> text="yes">
+        <!-- aira-label 可选 -->
+        <$button tooltip="关闭嵌入搜索" class=<<tv-config-toolbar-class>> >
+            <$action-setfield $tiddler=<<state>> $value="no" />
+                <!-- 下面的两个 list 等价于 if，需要修改里面的图标 -->
+                <$list filter="[<tv-config-toolbar-icons>match[yes]]">
+                    {{$:/core/images/transcludify}}
+                </$list>
+                <$list filter="[<tv-config-toolbar-text>match[yes]]">
+                    <span class="tc-btn-text">
+                        <$text text=<<usage>> />
+                    </span>
+                </$list>
+        </$button>
+    </$reveal>
+    <$reveal type="nomatch" state=<<state>> text="yes">
+        <$button tooltip="启用嵌入搜索" class=<<tv-config-toolbar-class>> >
+            <$action-setfield $tiddler=<<state>> $value="yes" />
+                <$list filter="[<tv-config-toolbar-icons>match[yes]]">
+                    {{$:/core/images/linkify}}
+                </$list>
+                <$list filter="[<tv-config-toolbar-text>match[yes]]">
+                    <span class="tc-btn-text">
+                        <$text text=<<usage>> />
+                    </span>
+                </$list>
+        </$button>
+    </$reveal>
+</$let>

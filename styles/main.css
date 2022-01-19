@@ -1,0 +1,54 @@
+.bk-container {
+    /* max-height: 28rem; */
+    /* overflow: auto; */
+    margin-top: 1.6em;
+    display: flex;
+    flex-direction: column;
+}
+
+.bk-container button {
+    width: 6em;
+    margin: .5em 0;
+    outline: none;
+    border: 0;
+    border-radius: 2px;
+    cursor: pointer;
+    color: #cccccc;
+    background-color: #f8f8f8;
+    transition: all 0.25s linear;
+}
+
+.bk-container button:hover {
+    color: black;
+    background-color: #efefef;
+}
+
+.bk-container .bk-section {
+    max-height: 24rem;
+    overflow: auto;
+    /* margin: 0.5em 0; */
+    display: flex;
+    flex-direction: column;
+}
+
+.bk-link {
+    display: inline-flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.bk-link-date {
+    font-style: italic;
+    color: #9a9a9a;
+}
+
+.bk-item {
+    margin: .25em 0;
+    background: #f4f4f4;
+    padding: .5em;
+    border-radius: 4px;
+}
+
+.bk-item .tc-drop-down {
+    left: -380px !important;
+}

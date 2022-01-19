@@ -1,0 +1,20 @@
+title: $:/plugins/LinHQ/backlink/templates/item
+type: text/vnd.tiddlywiki
+
+<div class="bk-item">
+    <div class="bk-link">
+        <span>
+            <$link/> <span class="bk-link-date">(<$view format="date" template="YYYY年0MM月0DD日 0hh:0mm DDD" field="modified"/>)</span>
+        </span>
+        <span>
+            <$list filter=[is[current]tags[]]>
+                <$macrocall $name="tag" tag=<<currentTiddler>>/>
+            </$list>
+        </span>
+    </div>
+    <$reveal state=<<foldall>> type="nomatch" text="yes">
+        <div class="bk-preview">
+            <$macrocall $name="finder" title=<<currentTiddler>> keyword=<<curr>> />
+        </div>
+    </$reveal>
+</div>

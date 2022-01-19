@@ -1,0 +1,57 @@
+title: $:/plugins/LinHQ/backlink/backlink
+tags: $:/tags/ViewTemplate
+type: text/vnd.tiddlywiki
+list-after: $:/core/ui/ViewTemplate/body
+
+<!-- 需要变量替换成字符串，而不能直接使用变量 -->
+<!-- [!is[system]search:text:word[{{$(currentTiddler)$}}]] [is[current]backlinks[]] +[unique[]] -->
+\define exmatcher()
+[!is[system]search:text:literal<currentTiddler>] -[<currentTiddler>] +[unique[]]
+\end
+
+\define shouldMatch()
+[is[current]!is[system]]
+\end
+
+<$list filter=<<shouldMatch>>>
+    <$let extend=<<qualify "$:/state/backlink/ex">> foldall=<<qualify "$:/state/backlink/foldall">> curr=
+            <<currentTiddler>>>
+        <div class="bk-container">
+            <div class="bk-buttons">
+                <$reveal type="match" state=<<foldall>> text="yes">
+                    <$button>
+                        精简
+                        <$action-deletetiddler $tiddler=<<foldall>>/>
+                    </$button>
+                </$reveal>
+                <$reveal type="nomatch" state=<<foldall>> text="yes">
+                    <$button set=<<foldall>> setTo="yes">
+                        详情
+                    </$button>
+                </$reveal>
+                <!-- 显示发现就不显示反链了 -->
+                <$reveal type="nomatch" state=<<extend>> text="yes">
+                    <$button set=<<extend>> setTo="yes">
+                        Linked
+                    </$button>
+                </$reveal>
+                <$reveal type="match" state=<<extend>> text="yes">
+                    <$button>
+                        <!-- 避免膨胀 -->
+                        <$action-deletetiddler $tiddler=<<extend>>/>
+                        Unlinked
+                    </$button>
+                </$reveal>
+            </div>
+            <div class="bk-section">
+                <$reveal type="nomatch" state=<<extend>> text="yes">
+                    <$list template="$:/plugins/LinHQ/backlink/templates/item"
+                        filter="[is[current]backlinks[]]" />
+                </$reveal>
+                <$reveal type="match" state=<<extend>> text="yes">
+                    <$list template="$:/plugins/LinHQ/backlink/templates/item" filter=<<exmatcher>> />
+                </$reveal>
+            </div>
+        </div>
+    </$let>
+</$list>
