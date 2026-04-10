@@ -3,54 +3,65 @@ tags: $:/tags/ViewTemplate
 type: text/vnd.tiddlywiki
 list-after: $:/core/ui/ViewTemplate/body
 
-<!-- [!is[system]search:text:word[{{$(currentTiddler)$}}]] [is[current]backlinks[]] +[unique[]] -->
-\define exmatcher()
-[!is[system]search:text:literal<currentTiddler>] -[<currentTiddler>] +[unique[]]
-\end
-
-\define shouldMatch()
-[is[current]!is[system]]
-\end
-
-<$list filter=<<shouldMatch>>>
-    <$let extend=<<qualify "$:/state/backlink/ex">> foldall=<<qualify "$:/state/backlink/foldall">> curr=
-            <<currentTiddler>>>
+<%if [is[current]!is[system]] %>
+    <$vars
+        show=<<qualify "$:/state/backlink/show">>
+        foldall=<<qualify "$:/state/backlink/foldall">>
+        toc=<<qualify "$:/state/backlink/toc">>
+        curr=<<currentTiddler>>
+    >
         <div class="bk-container">
+            <div class="bk-section">
+                <$reveal type="match" state=<<toc>> text="yes">
+                    <$list template="$:/plugins/LinHQ/backlink/templates/item" filter="[tag<currentTiddler>!sort[modified]]" />
+                </$reveal>
+            </div>
             <div class="bk-buttons">
+                <$reveal type="nomatch" state=<<foldall>> text="yes">
+                    <$button set=<<foldall>> setTo="yes">
+                        Preview
+                    </$button>
+                </$reveal>
                 <$reveal type="match" state=<<foldall>> text="yes">
                     <$button>
                         Overview
                         <$action-deletetiddler $tiddler=<<foldall>>/>
                     </$button>
                 </$reveal>
-                <$reveal type="nomatch" state=<<foldall>> text="yes">
-                    <$button set=<<foldall>> setTo="yes">
-                        Preview
-                    </$button>
-                </$reveal>
                 <!-- 显示发现就不显示反链了 -->
-                <$reveal type="nomatch" state=<<extend>> text="yes">
-                    <$button set=<<extend>> setTo="yes">
+                <$reveal type="nomatch" state=<<show>> text="global">
+                    <$button set=<<show>> setTo="global">
                         Linked
                     </$button>
                 </$reveal>
-                <$reveal type="match" state=<<extend>> text="yes">
+                <$reveal type="match" state=<<show>> text="global">
                     <$button>
                         <!-- 避免膨胀 -->
-                        <$action-deletetiddler $tiddler=<<extend>>/>
-                        Global
+                        <$action-deletetiddler $tiddler=<<show>>/>
+                        Fulltext
+                    </$button>
+                </$reveal>
+                <$reveal type="match" state=<<toc>> text="yes">
+                    <$button class="bk-selected">
+                        <$action-deletetiddler $tiddler=<<toc>>/>
+                        TOC
+                    </$button>
+                </$reveal>
+                <$reveal type="nomatch" state=<<toc>> text="yes">
+                    <$button set=<<toc>> setTo="yes">
+                        TOC
                     </$button>
                 </$reveal>
             </div>
             <div class="bk-section">
-                <$reveal type="nomatch" state=<<extend>> text="yes">
+                <$reveal type="nomatch" state=<<show>> text="global">
                     <$list template="$:/plugins/LinHQ/backlink/templates/item"
                         filter="[is[current]backlinks[]]" />
                 </$reveal>
-                <$reveal type="match" state=<<extend>> text="yes">
-                    <$list template="$:/plugins/LinHQ/backlink/templates/item" filter=<<exmatcher>> />
+                <$reveal type="match" state=<<show>> text="global">
+                    <$list template="$:/plugins/LinHQ/backlink/templates/item" filter="[!is[system]fts:text:exact<currentTiddler>] -[<currentTiddler>] +[unique[]]" />
                 </$reveal>
             </div>
         </div>
-    </$let>
-</$list>
+    </$vars>
+<%endif%>

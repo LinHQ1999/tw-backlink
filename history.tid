@@ -1,0 +1,12 @@
+title: $:/plugins/LinHQ/backlink/history
+type: text/vnd.tiddlywiki
+modifier: LinHQ1999
+
+# ''2.0.0'' `fts` / `fulltext` 可在后缀标志段使用 `or` / `and` 控制当次检索的多词组合；全文检索默认 OR，内置字段 `boost` 等（详见 readme 与设置页）。
+# ''1.4.1'' 全文索引相关条目按 TiddlyWiki 惯例重命名：配置为 `$:/config/plugins/LinHQ/backlink/search-indexer`，控制台设置页为 `$:/plugins/LinHQ/backlink/settings/full-text-index`（原 `$:/config/searchindexer` 与 `ui/controlpanel/settings-search-indexer` 需自行迁移）。
+# 打印时不显示反链
+# 修复导出错误
+# 替换默认的高亮机制
+# 修改并定制 ctx widget，^^1.4.0 new！^^现在可以高亮多个 word 了
+# 修改边栏搜索
+# 点击高亮跳转到对应 tiddler (Experimental!!!)

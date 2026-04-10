@@ -1,0 +1,44 @@
+title: $:/plugins/LinHQ/backlink/readme
+type: text/vnd.tiddlywiki
+modifier: LinHQ1999
+created: 20220119034557963
+
+!! 关于
+
+带有预览的反向链接插件
+
+!! 注意
+
+此处''并不''使用 `dynannotate` 实现高亮，因为 `dynannotate` 实现的是对渲染后文本的高亮，本插件更需要的是处理 //raw// 文本的高亮。
+
+!! 功能
+
+* 带有标题、创建时间、和 tag 信息的反向链接。
+* 默认开启的摘要预览。
+* 默认关闭的全局发现（全局搜索）。
+* `ctx` widget：默认 `seg="no"` 按空白/标点切词；边栏全文预览使用 `seg="yes"` 时启用 `Intl.Segmenter` 整词切分以便中文高亮。
+* //新增// 基于 [[MiniSearch|https://lucaong.github.io/minisearch/]] 的高性能全文搜索索引器。
+
+!! 全文索引配置
+
+* 见 [[全文索引|$:/plugins/LinHQ/backlink/settings/full-text-index]]，改后需''重新加载''。
+* 默认含 `caption`；`fuzzy` 默认 `0`。多词默认 OR；要 AND 时在 `fts` / `fulltext` 第二段写 `and`，或调用 `wiki.searchFullText(..., { combineWith: "AND" })`。字段权重内置，见设置页。
+* 旧配置路径 `$:/config/searchindexer` 请迁移后删除。
+
+!! `fts` / `fulltext` 筛选算子
+
+`fts` 与 `fulltext` 等价，经 MiniSearch 索引；''忽略''输入标题列表，返回全文命中的标题。空操作数无结果；`!` 对全部标题取补。
+
+```
+[fts:<field list>:<flag list>[<parameter>]]
+```
+
+* ''第一段（字段）''：逗号分隔。缺省或空 = 按配置里的全部索引字段；首项 `*` 同义；首项 `-` 开头 = 从索引字段中排除所列字段。
+* ''第二段（标志）''：逗号分隔，名称须''完全一致、区分大小写''。仅要标志时写 `[fts::…]`。允许：`or`、`and`（改当次多词组合，默认 OR；并存时 `and` 优先）、`casesensitive`、`exact`（关模糊与前缀，其余仍服从配置）。
+* ''操作数''：检索字符串。`fuzzy` / `minTokenLength` / 索引字段等只来自 [[配置|$:/config/plugins/LinHQ/backlink/search-indexer]]，算子不设等价 flag。
+
+!! 状态管理机制
+
+* 点击按钮进行关闭时删除状态，而不是改变状态的值。
+* 每个 tiddler 保存各自的状态。
+* 刷新清除所有状态。

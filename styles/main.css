@@ -1,32 +1,35 @@
 .bk-container {
-    /* max-height: 28rem; */
-    /* overflow: auto; */
     margin-top: 1.6em;
     display: flex;
     flex-direction: column;
 }
 
+@media print {
+    .bk-container {
+        display: none;
+    }
+}
+
 .bk-container button {
-    width: 6em;
+    width: 6.2em;
     margin: .5em 0;
     outline: none;
     border: 0;
     border-radius: 2px;
     cursor: pointer;
-    color: #cccccc;
-    background-color: #f8f8f8;
+    color: <<colour tiddler-controls-foreground-selected>>;
+    background-color: <<colour sidebar-controls-foreground>>;
     transition: all 0.25s linear;
 }
 
-.bk-container button:hover {
-    color: black;
-    background-color: #efefef;
+.bk-container button.bk-selected,.bk-container button:hover {
+    color: <<colour sidebar-controls-foreground>>;
+    background-color: <<colour tiddler-controls-foreground-selected>>;
 }
 
 .bk-container .bk-section {
     max-height: 24rem;
     overflow: auto;
-    /* margin: 0.5em 0; */
     display: flex;
     flex-direction: column;
 }
@@ -39,16 +42,32 @@
 
 .bk-link-date {
     font-style: italic;
-    color: #9a9a9a;
+    color: <<colour tiddler-subtitle-foreground>>;
 }
 
 .bk-item {
     margin: .25em 0;
-    background: #f4f4f4;
+    background: <<colour pre-background>>;
     padding: .5em;
     border-radius: 4px;
 }
 
 .bk-item .tc-drop-down {
     left: -380px !important;
+}
+
+<!--Context style-->
+.matched{
+  background: linear-gradient(135deg,#cc95c0,#dbd4b4,#7aa1d2);
+  color: <<color site-title-foreground>>;
+  font-weight: bold;
+  padding: .1em;
+  border-radius: 2px;
+}
+.tw-context {
+  word-break: break-all;
+  word-wrap: break-word;
+  margin: .25em;
+  max-height: 15vh;
+  overflow-y: auto;
 }

@@ -1,0 +1,42 @@
+title: $:/plugins/LinHQ/backlink/sc-sidebar
+creator: LinHQ1999
+first-search-filter: [!is[system]fts:text<userInput>sort[modified]limit[20]]
+second-search-filter: [!is[system]fts:title<userInput>sort[modified]limit[20]]
+tags: $:/tags/SearchResults
+type: text/vnd.tiddlywiki
+caption: 全文
+
+\whitespace trim
+
+\define ctxSearchSidebar()
+<$set name="minlen" tiddler="$:/config/Search/MinLength" field="text">
+
+//<small>条目内容匹配</small>//
+
+<$list filter="[<userInput>minlength<minlen>]" variable="ignore">
+    <$list filter={{{ [<configTiddler>get[first-search-filter]] }}}
+        emptyMessage={{$:/language/Search/Matches/NoResult}}>
+        <span class={{{[<currentTiddler>addsuffix[-primaryList]] -[<searchListState>get[text]]
+                +[then[]else[tc-list-item-selected]] }}}>
+                <$transclude tiddler="$:/core/ui/ListItemTemplate" />
+                <$ctx term=<<userInput>> seg="yes"/>
+        </span>
+    </$list>
+</$list>
+
+//<small>{{$:/language/Search/Matches/Title}}</small>//
+
+<$list filter="[<userInput>minlength<minlen>]" variable="ignore">
+    <$list filter={{{ [<configTiddler>get[second-search-filter]] }}}
+        emptyMessage={{$:/language/Search/Matches/NoResult}}>
+        <span class={{{[<currentTiddler>addsuffix[-secondaryList]] -[<searchListState>get[text]]
+                +[then[]else[tc-list-item-selected]] }}}>
+                <$transclude tiddler="$:/core/ui/ListItemTemplate" />
+        </span>
+    </$list>
+</$list>
+
+</$set>
+\end
+
+<<ctxSearchSidebar>>

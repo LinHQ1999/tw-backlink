@@ -1,0 +1,18 @@
+title: $:/plugins/LinHQ/backlink/settings/full-text-index
+caption: 全文索引
+tags: $:/tags/ControlPanel/SettingsTab
+list-after: $:/core/ui/ControlPanel/Settings/TiddlyWiki
+
+数据在 [[$:/config/plugins/LinHQ/backlink/search-indexer]]（JSON）。修改后''重新加载''。
+
+|!索引字段（空格） |<$edit-text tiddler="$:/config/plugins/LinHQ/backlink/search-indexer" index="fields" tag="input" default="title text tags caption"/> |
+|!最小词长（≥1） |<$edit-text tiddler="$:/config/plugins/LinHQ/backlink/search-indexer" index="minTokenLength" tag="input" type="number" min="1" step="1" default="1"/> |
+|!fuzzy（0 关，0–1 比例） |<$edit-text tiddler="$:/config/plugins/LinHQ/backlink/search-indexer" index="fuzzy" tag="input" type="number" step="0.05" min="0" max="1" default="0"/> |
+
+多词默认 OR；要 AND 时在 `fts` 第二段写 `and`（见 readme）。`title` / `caption` / `tags` / `text` 权重内置，此页不可改。
+
+<$checkbox tiddler="$:/config/plugins/LinHQ/backlink/search-indexer" index="prefix" checked="true" unchecked="false" default="true"> 前缀匹配 </$checkbox>
+
+<$checkbox tiddler="$:/config/plugins/LinHQ/backlink/search-indexer" index="excludeSystem" checked="true" unchecked="false" default="true"> 排除 `$:/` 系统条目 </$checkbox>
+
+<$checkbox tiddler="$:/config/plugins/LinHQ/backlink/search-indexer" index="excludeBinary" checked="true" unchecked="false" default="true"> 排除二进制条目 </$checkbox>

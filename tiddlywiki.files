@@ -1,0 +1,11 @@
+{
+	"tiddlers": [],
+	"directories": [
+		{
+			"path": ".",
+			"isTiddlerFile": true,
+			"searchSubdirectories": true,
+			"filesRegExp": "^(?!AGENTS\\.md$)(?!backlink\\.code-workspace$)(?!plugin\\.info$).+$"
+		}
+	]
+}

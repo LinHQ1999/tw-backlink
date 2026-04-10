@@ -1,0 +1,12 @@
+title: $:/config/plugins/LinHQ/backlink/search-indexer
+caption: Config Data
+type: application/json
+
+{
+  "fields": "title text tags caption",
+  "fuzzy": 0,
+  "prefix": true,
+  "excludeSystem": true,
+  "excludeBinary": true,
+  "minTokenLength": 1
+}

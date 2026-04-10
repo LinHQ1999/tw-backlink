@@ -14,7 +14,7 @@ type: text/vnd.tiddlywiki
     </div>
     <$reveal state=<<foldall>> type="nomatch" text="yes">
         <div class="bk-preview">
-            <$macrocall $name="finder" title=<<currentTiddler>> keyword=<<curr>> />
+            <$ctx min-term-length=2 term=<<curr>>/>
         </div>
     </$reveal>
 </div>
